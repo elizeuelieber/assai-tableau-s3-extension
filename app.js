@@ -1,26 +1,48 @@
 tableau.extensions.initializeAsync().then(() => {
 
     const dashboard = tableau.extensions.dashboardContent.dashboard;
+
     const sheet = dashboard.worksheets[0];
 
-    sheet.addEventListener(tableau.TableauEventType.MarkSelectionChanged, () => {
-        carregarImagem(sheet);
-    });
+    sheet.getSummaryDataAsync().then(data => {
 
-    carregarImagem(sheet);
+        montarMapa(data);
+    });
 });
 
-function carregarImagem(sheet) {
+function montarMapa(data) {
 
-    sheet.getSelectedMarksAsync().then(marks => {
+    // Dimensão da imagem (IMPORTANTE)
+    const width = 1000;
+    const height = 600;
 
-        if (!marks.data || marks.data.length === 0) {
-            console.log("Nada selecionado");
-            return;
-        }
+    // Criar mapa
+    const map = L.map('map', {
+        crs: L.CRS.Simple, // isso permite usar imagem
+        minZoom: -2
+    });
 
-        const imageUrl = marks.data[0][0].value;
+    const bounds = [[0,0], [height, width]];
 
-        document.getElementById("image").src = imageUrl;
+    // 👇 SUA IMAGEM (S3)
+    const imageUrl = "https://meu-bucket.s3.amazonaws.com/mapa.jpg";
+
+    L.imageOverlay(imageUrl, bounds).addTo(map);
+
+    map.fitBounds(bounds);
+
+    // Adicionar pontos do Tableau
+    data.data.forEach(row => {
+
+        const x = row[0].value;
+        const y = row[1].value;
+        const nome = row[2].value;
+
+        L.circleMarker([y, x], {
+            radius: 6,
+            color: 'red'
+        })
+        .addTo(map)
+        .bindPopup(nome);
     });
 }
