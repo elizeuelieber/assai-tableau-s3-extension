@@ -1,0 +1,11 @@
+
+<?xml version="1.0" encoding="utf-8"?>
+<manifest manifest-version="0.1">
+  <dashboard-extension id="com.s3.public.image" extension-version="1.0.0">
+    <default-locale>pt_BR</default-locale>
+    <name>S3 Public Image Viewer</name>
+    <description>Mostra imagem pública do S3</description>
+	<url>https://elizeuelieber.github.io/assai-tableau-s3-extension/index.html</url>
+    <min-api-version>1.0</min-api-version>
+  </dashboard-extension>
+</manifest>
