@@ -1,12 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+  <!-- Tableau -->
   <script src="https://unpkg.com/tableau-extensions-api/lib/tableau.extensions.1.latest.js"></script>
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <style>
+    #map {
+      height: 500px;
+      width: 100%;
+    }
+  </style>
 </head>
 
 <body>
-  <h3>Imagem do S3</h3>
-  <img id="image" width="600" />
+  <div id="map"></div>
 
   <script src="app.js"></script>
 </body>
